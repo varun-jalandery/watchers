@@ -8,7 +8,7 @@ let numberOfRsyncs = 0;
 const addWatcher = (filename) => {
     fs.watch(
         `${process.env.BASE_DIR}${filename}`,
-        { encoding: 'buffer', recursive: true },
+        { encoding: 'utf8', recursive: true },
         (eventType, filename) => {
             if (filename) {
                 console.log('Changed : ', filename);
@@ -47,6 +47,5 @@ setInterval(() => {
         console.error('Unstability Detected, too many rsyncs happened.');
         process.exit(1);
     }
-    console.log('unstab', numberOfRsyncs);
     numberOfRsyncs = 0;
 }, 5000);
