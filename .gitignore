@@ -1,0 +1,4 @@
+.env
+.rsyncc.sh
+node_modules
+.idea

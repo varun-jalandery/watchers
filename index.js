@@ -1,20 +1,13 @@
+require('dotenv').config();
 const fs = require('fs');
 const { execFile } = require('child_process');
-
-const BASE_DIR = '/Users/varunjalandery/sites/mycode/liberty-cms/';
-
-const SUB_DIRS = [
-    'src',
-    'bin',
-    'lib'
-];
 
 let lastChangeTime = null;
 let numberOfRsyncs = 0;
 
 const addWatcher = (filename) => {
     fs.watch(
-        `${BASE_DIR}${filename}`,
+        `${process.env.BASE_DIR}${filename}`,
         { encoding: 'buffer', recursive: true },
         (eventType, filename) => {
             if (filename) {
@@ -40,7 +33,7 @@ const rsyncc = () => {
     });
 }
 
-SUB_DIRS.forEach(dir => addWatcher(dir));
+process.env.SUB_DIRS.split(';').forEach(dir => addWatcher(dir));
 
 setInterval(() => {
 	if (lastChangeTime && new Date().getTime() - lastChangeTime > 500) {
